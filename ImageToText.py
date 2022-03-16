@@ -45,32 +45,32 @@ def get_key(val):
     return "key doesn't exist"
 
 
-# a = cv2.imread('images/a.png')
-# idx = np.where(np.all(a == (34, 34, 34), 2))
-# if not len(idx[0]) == 0 and not len(idx[1]) == 0:
-#     x1, y1, x2, y2 = idx[1].min(), idx[0].min(), idx[1].max(), idx[0].max()
-#     a = a[y1:y2, x1:x2]
-# a = convert_image(a)
-# b = cv2.imread('images/b.png')
-#
-# # re-block the figure
-# #np.where just contain two values: True or False
-# #Run all numpy arr and compare value((34, 34, 34)) and covert True-False
-# idx = np.where(np.all(b == (34, 34, 34), 2))
-# if not len(idx[0]) == 0 and not len(idx[1]) == 0:
-#     x1, y1, x2, y2 = idx[1].min(), idx[0].min(), idx[1].max(), idx[0].max()
-#     b = b[y1:y2, x1:x2]
-#
-# # convert numpy array to image
-# b = convert_image(b)
-# # c = Image.resresize(a, (16, 50), interpolation=cv2.INTER_AREA)
-# a = a.resize((16, 50))
-# b = b.resize((16, 50))
-# a.show()
-# b.show()
-# # cv2.imshow('b',b)
-# print(equal(a, b))
-# cv2.waitKey()
+a = cv2.imread('images/a.png')
+idx = np.where(np.all(a == (34, 34, 34), 2))
+if not len(idx[0]) == 0 and not len(idx[1]) == 0:
+    x1, y1, x2, y2 = idx[1].min(), idx[0].min(), idx[1].max(), idx[0].max()
+    a = a[y1:y2, x1:x2]
+a = convert_image(a)
+b = cv2.imread('images/b.png')
+
+# re-block the figure
+#np.where just contain two values: True or False
+#Run all numpy arr and compare value((34, 34, 34)) and covert True-False
+idx = np.where(np.all(b == (34, 34, 34), 2))
+if not len(idx[0]) == 0 and not len(idx[1]) == 0:
+    x1, y1, x2, y2 = idx[1].min(), idx[0].min(), idx[1].max(), idx[0].max()
+    b = b[y1:y2, x1:x2]
+
+# convert numpy array to image
+b = convert_image(b)
+# c = Image.resresize(a, (16, 50), interpolation=cv2.INTER_AREA)
+a = a.resize((16, 50))
+b = b.resize((16, 50))
+a.show()
+b.show()
+# cv2.imshow('b',b)
+print(equal(a, b))
+cv2.waitKey()
 
 imgDict = {}
 # đọc hết tất cả các ảnh từ file
