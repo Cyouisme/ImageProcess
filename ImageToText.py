@@ -74,7 +74,7 @@ _, thresh = cv2.threshold(dilation.copy(), 127, 255, cv2.THRESH_BINARY_INV)
 # Tìm countour của ảnh - contour chỉ được xác định trên đối tượng có màu trắng nền đen
 contours, _ = cv2.findContours(
     thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-# cv2.imshow('cc', thresh)
+cv2.imshow('cc', thresh)
 
 boxes = []
 for (i, c) in enumerate(contours):
@@ -103,7 +103,7 @@ for i, (x1, y1, x2, y2) in enumerate(boxes):
         value = Image.fromarray(value)
         value = value.resize((16, 50))
         # value.show()
-        if equal(value, crop) is None == False:
+        if equal(value, crop) is None:
             print(get_key(value))
         else:
             continue
