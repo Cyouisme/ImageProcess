@@ -103,7 +103,7 @@ for i, (x1, y1, x2, y2) in enumerate(boxes):
         value = Image.fromarray(value)
         value = value.resize((16, 50))
         # value.show()
-        if equal(value, crop) is None == False:
+        if equal(value, crop) is None:
             print(get_key(value))
         else:
             continue
