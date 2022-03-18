@@ -37,20 +37,25 @@ for c in contours:
     if (h, w) != dilated.shape[:2] and h >= 2:
         dir_images.setdefault(x, ((x, y, w, h), thresh[y:y + h, x:x + w]))
 list_img = sorted(dir_images.items(), reverse=False)[:-1]
-print(list_img)
-for _, ((x, y, w, h), _) in list_img:
-    cv2.rectangle(im, (x, y), (x + w, y + h), (128, 128, 128), 2)
-cv2.imshow('a', im)
-cv2.waitKey()
+# print(list_img)
+# for i, (_, ((x, y, w, h), _)) in enumerate(list_img):
+#     for _, ((x, y, w, h), _) in list_img[i:]:
+#     cv2.rectangle(im, (x, y), (x + w, y + h), (128, 128, 128), 2)
+# cv2.imshow('a', im)
+# cv2.waitKey()
 i = 0
 while i <= len(list_img) - 2:
+
     check, img = overlapping_image(list_img[i][1], list_img[i + 1][1])
     print(check)
     list_images.append(
         cv2.copyMakeBorder(cv2.resize(img, (24, 43)), 30, 30, 30, 30, cv2.BORDER_CONSTANT, value=(0, 0, 0)))
     if check:
         i += 1
-    if i == len(list_img) - 2 and check == False:
+    # if i == len(list_img) - 2 and check == False:
+    #     list_images.append(cv2.copyMakeBorder(cv2.resize(list_img[len(list_img) - 1][1][1], (24, 43)), 30, 30, 30, 30,
+    #                                           cv2.BORDER_CONSTANT, value=(0, 0, 0)))
+    if i == len(list_img)-2:
         list_images.append(cv2.copyMakeBorder(cv2.resize(list_img[len(list_img) - 1][1][1], (24, 43)), 30, 30, 30, 30,
                                               cv2.BORDER_CONSTANT, value=(0, 0, 0)))
     i += 1
