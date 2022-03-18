@@ -12,20 +12,6 @@ def equal(im1, im2):
     return ImageChops.difference(im1, im2)
 
 
-# Convert numpy arr to image
-def convert_image(im_convert):
-    im_convert = Image.fromarray(im_convert)
-    return im_convert
-
-
-# function to return key for any value
-def get_key(val):
-    for key, value in imgDict.items():
-        if val == value:
-            return key
-
-    return "key doesn't exist"
-
 # Read and fix input image
 imgDict = {}
 # đọc hết tất cả các ảnh từ file
@@ -75,7 +61,7 @@ for p in Path('images/data').rglob('*.[jp][pn]*'):
     #     cv2.imshow('tt', im)
     #     cv2.waitKey()
 
-#Read and compare output image with fixed image
+# Read and compare output image with fixed image
 im = cv2.imread('images/imageInput/9.png')
 imgray = cv2.cvtColor(im.copy(), cv2.COLOR_BGR2GRAY)
 cv2.imshow('imgray', imgray)
@@ -102,6 +88,8 @@ for i, (x1, y1, x2, y2) in enumerate(boxes):
     crop = thresh[y1:y2, x1:x2]
     cv2.imshow('o', crop)
     idx = np.where(np.all(cv2.cvtColor(crop, cv2.COLOR_GRAY2BGR) == (255, 255, 255), axis=2))
+    # print(idx)
+    # cv2.waitKey()
     crop = im[y1:y2, x1:x2]
     Image.fromarray(crop).save(f'images/imageOutput/{random.random()}.png')
     idx = np.where(np.all(crop == (34, 34, 34), axis=2))
@@ -154,23 +142,23 @@ for i, (x1, y1, x2, y2) in enumerate(boxes):
         #     continue
         # break
     # break
-    crop = Image.fromarray(np.array(crop)).resize((16, 50))
-    # crop.show()
-    for value in imgDict.values():  # đây nè, t lặp một vòng lặp trong cái imgDict để lấy cái value của hắn ra
-        idx = np.where(np.all(value == (34, 34, 34), axis=2))
-        if not len(idx[0]) == 0 and not len(idx[1]) == 0:
-            x1, y1, x2, y2 = idx[1].min(), idx[0].min(
-            ), idx[1].max(), idx[0].max()
-            # cv2.rectangle(value, (x1, y1), (x2, y2), (0, 0, 0), 2)
-            value = value[y1:y2, x1:x2]
-        value = Image.fromarray(value)
-        value = value.resize((16, 50))
-        # value.show()
-        if equal(value, crop) is None:
-            print(get_key(value))
-        else:
-            continue
-    # for j in range(30):
+    # crop = Image.fromarray(np.array(crop)).resize((16, 50))
+    # # crop.show()
+    # for value in imgDict.values():  # đây nè, t lặp một vòng lặp trong cái imgDict để lấy cái value của hắn ra
+    #     idx = np.where(np.all(value == (34, 34, 34), axis=2))
+    #     if not len(idx[0]) == 0 and not len(idx[1]) == 0:
+    #         x1, y1, x2, y2 = idx[1].min(), idx[0].min(
+    #         ), idx[1].max(), idx[0].max()
+    #         # cv2.rectangle(value, (x1, y1), (x2, y2), (0, 0, 0), 2)
+    #         value = value[y1:y2, x1:x2]
+    #     value = Image.fromarray(value)
+    #     value = value.resize((16, 50))
+    #     # value.show()
+    #     if equal(value, crop) is None:
+    #         print(get_key(value))
+    #     else:
+    #         continue
+    # # for j in range(30):
     #     Image.fromarray(crop).save(f'images/imageOutput/{random.random()}.png')
 
 cv2.waitKey()
