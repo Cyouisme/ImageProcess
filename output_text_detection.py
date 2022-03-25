@@ -31,6 +31,7 @@ dataset = read_dataset("images/data")
 
 def image_to_text():
     # Read image form file and convert to gray image
+    # And using Path because read file with Vietnamese name
     for f in Path('images/imageInput').rglob('*.[jp][pn]*'):
         im = Image.open(f.as_posix()).convert('L')
         # Convert image to numpy arr
@@ -40,18 +41,13 @@ def image_to_text():
         thresh = cv2.threshold(im, 127, 255, cv2.THRESH_BINARY_INV)[1]
         dilated = cv2.dilate(thresh.copy(), np.ones((5, 1), np.uint8), iterations=1)
         contours, _ = cv2.findContours(dilated.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        # cv2.drawContours(im, contours, -1, (0, 0, 0), -1)
-        # cv2.imshow('im', im)
         dir_images = {}
         list_images = []
         for c in contours:
             x, y, w, h = cv2.boundingRect(c)
             if (h, w) != dilated.shape[:2] and h >= 2:
                 dir_images.setdefault(x, ((x, y, w, h), thresh[y:y + h, x:x + w]))
-            # cv2.rectangle(im, (x, y), (x + w, y + h), (128, 128, 128), 2)
         list_img = sorted(dir_images.items(), reverse=False)[:-1]
-        # cv2.imshow('im', im)
-        # cv2.waitKey()
         i = 0
         while i <= len(list_img) - 2:
             check, img = overlapping_image(list_img[i][1], list_img[i + 1][1])
@@ -70,10 +66,7 @@ def image_to_text():
                      1 if (nx - (list_img[i][1][0][0] + list_img[i][1][0][2])) > 7 else 0])
             i += 1
         # Compare input and output image and print it to screen
-        word_list = []
         result = ''
-        character = []
-        dicnationaryVN = []
         for i, (image, isSpace) in enumerate(list_images):
             min_diff = []
             for image_data in dataset:
@@ -98,6 +91,9 @@ def image_to_text():
             if 'l' in word:
                 if not word.startswith('l'):
                     word_list[i] = word.replace('l', 'i')
+            if 'U' in word:
+                if not word.startswith('U'):
+                    word_list[i] = word.replace('U', 'u')
         # Print the result to screen
         print(" ".join(word_list))
 
